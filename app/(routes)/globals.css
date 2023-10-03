@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	/* This is an alternative to using function props and ownerState to style a component. The corresponding Switch component can be rendered in page.tsx without a use-client directive, but you cannot easily import the class names like in JS/TS.
+
+  However this may not be a viable pattern since you'll typically pass other non-serializable props like event handers to components, which means you will have to add your own 'use-client' boundaries in your app anyway. */
+}
+
+
+/* Ocultar as setas no Firefox */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Ocultar as setas no Chrome, Safari e Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Ocultar as setas no Firefox */
+input[type="number"]::-moz-inner-spin-button,
+input[type="number"]::-moz-outer-spin-button {
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
