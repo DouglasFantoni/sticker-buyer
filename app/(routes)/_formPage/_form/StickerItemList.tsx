@@ -1,27 +1,20 @@
 import {STICKER_LIST} from '@/app/_constants/stickers';
 import StickerItem from './StickerItem';
 
-interface IStickerItemListProps {}
-
-export default function StickerItemList({}: IStickerItemListProps) {
+export default function StickerItemList() {
+	const lastIndex = STICKER_LIST[STICKER_LIST.length - 1];
 	return (
-		<div>
-			{STICKER_LIST.map((sticker, index) => (
-				<div key={sticker.id} className="block">
+		<ul>
+			{STICKER_LIST.slice(0, -1).map(sticker => (
+				<li key={sticker.id}>
 					<StickerItem name={sticker.name} formName={sticker.formName} />
-					{index + 1 !== STICKER_LIST.length ? <div className="border-b-CL_GRAY border-b-[1px] my-4" /> : null}
-				</div>
+					<div className="border-b-CL_GRAY border-b-2 my-4" />
+				</li>
 			))}
-		</div>
+			{/* Renderizar o último item sem a borda */}
+			<li key={lastIndex.id}>
+				<StickerItem name={lastIndex.name} formName={lastIndex.formName} />
+			</li>
+		</ul>
 	);
-}
-
-{
-	/* <Checkbox
-										label={<H4>{sticker.name}</H4>}
-										defaultChecked
-										crossOrigin
-										ripple={false}
-										className="w-6 h-6 bg-CL_BLUE_DARK checked:bg-CL_BLUE_DARK hover:bg-CL_BLUE_DARKHOVER"
-									/> */
 }

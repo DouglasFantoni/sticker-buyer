@@ -1,7 +1,8 @@
 'use client';
 
-import H3 from '@/app/_components/Text/H3';
 import {Textarea} from '@/app/_components/form';
+import H3 from '@/app/_components/text/H3';
+import Label from '@/app/_components/text/Label';
 import {required} from '@/app/_helpers/reactFormHookValidation';
 import {Controller, FormProvider, useForm} from 'react-hook-form';
 import StickerItemList from './StickerItemList';
@@ -24,12 +25,7 @@ export default function StickerForm({}: IStickerFormProps) {
 			stickerAngular: 0,
 		},
 	});
-	const {
-		register,
-		handleSubmit,
-		formState: {errors},
-		control,
-	} = methods;
+	const {handleSubmit, control} = methods;
 
 	const onSubmit = (data: IFormStickerProps) => {
 		console.log(data);
@@ -44,7 +40,7 @@ export default function StickerForm({}: IStickerFormProps) {
 						<StickerItemList />
 					</div>
 					<div className="mt-4">
-						<H3>Observações</H3>
+						<Label htmlFor="observation">Observações</Label>
 						<div>
 							<Controller
 								rules={{
@@ -54,6 +50,7 @@ export default function StickerForm({}: IStickerFormProps) {
 								control={control}
 								render={({field}) => (
 									<Textarea
+										id="observation"
 										{...field}
 										labelProps={{
 											className: 'hidden',

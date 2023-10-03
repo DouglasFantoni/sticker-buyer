@@ -1,7 +1,7 @@
 import {IconButton, Input} from '@/app/_components/form';
 import MinusIcon from '@/app/_components/icons/MinusIcon';
 import PlusIcon from '@/app/_components/icons/PlusIcon';
-import H4 from '@/app/_components/Text/H4';
+import H4 from '@/app/_components/text/H4';
 import {Controller, useFormContext, useWatch} from 'react-hook-form';
 
 interface IStickerItemProps {
@@ -40,7 +40,12 @@ export default function StickerItem({name, formName}: IStickerItemProps) {
 			<H4>{name}</H4>
 			<div className="flex">
 				{!canShow ? (
-					<IconButton disabled={canShow} onClick={() => onClick(Op.SUB)} className="bg-CL_BLUE_DARK p-2  mr-2 ">
+					<IconButton
+						aria-label={`Diminuir em 1 a quantidade de stickers ${name}`}
+						disabled={canShow}
+						onClick={() => onClick(Op.SUB)}
+						className="bg-CL_BLUE_DARK p-2  mr-2 "
+					>
 						<MinusIcon className="w-5 h-4 text-CL_WHITE_LIGHT" />
 					</IconButton>
 				) : null}
