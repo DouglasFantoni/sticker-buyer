@@ -14,7 +14,7 @@ export const CL_GRAY_LIGHT = '#DDE3E9;';
 export const CL_GRAY_DARK = '#555555';
 export const CL_GRAY = '#dcdcdc';
 
-export const CL_GRAY_GREEN = '#00C57C';
+export const CL_GREEN_DARK = '#005133';
 
 export const CL_RED = '#F33232';
 export const CL_RED_LIGHT = '#F59393';
@@ -29,7 +29,7 @@ export const THEME_COLORS = {
 	CL_GRAY_LIGHT,
 	CL_GRAY_DARK,
 	CL_GRAY,
-	CL_GRAY_GREEN,
+	CL_GREEN_DARK,
 	CL_RED,
 	CL_RED_LIGHT,
 };

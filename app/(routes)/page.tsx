@@ -4,8 +4,8 @@ import StickerForm from './_formPage/_form/StickerForm';
 
 export default function Home() {
 	return (
-		<main className="w-full h-screen flex items-center justify-center bg-CL_WHITE">
-			<div className="container mx-auto max-w-screen-sm card">
+		<main className={'w-full h-screen bg-CL_WHITE block sm:flex sm:items-center sm:justify-center'}>
+			<div className="container mx-auto max-w-[550px] card">
 				<Card>
 					<div className="block h-[180px]  w-full relative">
 						<HeaderImage />
