@@ -1,9 +1,10 @@
 'use client';
 
+import Toast from '@/app/_components/Toast';
 import {Textarea} from '@/app/_components/form';
 import H3 from '@/app/_components/text/H3';
 import Label from '@/app/_components/text/Label';
-import {required} from '@/app/_helpers/reactFormHookValidation';
+import {useState} from 'react';
 import {Controller, FormProvider, useForm} from 'react-hook-form';
 import StickerItemList from './StickerItemList';
 import SubmitButton from './SubmitButton';
@@ -17,24 +18,34 @@ interface IFormStickerProps {
 interface IStickerFormProps {}
 
 export default function StickerForm({}: IStickerFormProps) {
-	const methods = useForm<IFormStickerProps>({
+ const [showToast, setShowToast] = useState(false);
+
+ const methods = useForm<IFormStickerProps>({
 		defaultValues: {
 			observation: '',
 			stickerReact: 0,
 			stickerVue: 0,
 			stickerAngular: 0,
 		},
-	});
-	const {handleSubmit, control} = methods;
+ });
+ const {handleSubmit, control} = methods;
 
-	const onSubmit = (data: IFormStickerProps) => {
-		console.log(data);
-	};
+ const onSubmit = (data: IFormStickerProps) => {
+		// Exibe o toast
+		setShowToast(true);
 
-	return (
+		console.log('SUBMIT', data);
+
+		// Esconde o toast após 5 segundos
+		setTimeout(() => {
+			setShowToast(false);
+		}, 8000);
+ };
+
+ return (
 		<FormProvider {...methods}>
-			<form className="p-10" onSubmit={handleSubmit(onSubmit)}>
-				<div>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className="p-10">
 					<H3>Quais stickers?</H3>
 					<div className="block">
 						<StickerItemList />
@@ -43,9 +54,6 @@ export default function StickerForm({}: IStickerFormProps) {
 						<Label htmlFor="observation">Observações</Label>
 						<div>
 							<Controller
-								rules={{
-									...required(),
-								}}
 								name={'observation'}
 								control={control}
 								render={({field}) => (
@@ -62,11 +70,14 @@ export default function StickerForm({}: IStickerFormProps) {
 							/>
 						</div>
 					</div>
-					<div className="flex justify-end mt-4">
+				</div>
+				<div className="flex justify-between  p-10 bg-CL_GRAY_LIGHT">
+					<Toast visible={showToast} message="Formulário enviado com sucesso!" />
+					<div className="">
 						<SubmitButton />
 					</div>
 				</div>
 			</form>
 		</FormProvider>
-	);
+ );
 }

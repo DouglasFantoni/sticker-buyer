@@ -9,47 +9,43 @@ interface IStickerItemProps {
 	formName: string;
 }
 
-enum Op {
-	'SUB' = 1,
-	'PLUS',
+enum ActionType {
+	DECREMENT = 1,
+	INCREMENT,
 }
 
 export default function StickerItem({name, formName}: IStickerItemProps) {
-	const {
-		control,
-		setValue,
-		getValues,
-		formState: {errors},
-	} = useFormContext();
-
+	const {control, setValue, getValues} = useFormContext();
 	const value: number | undefined = useWatch({control, name: formName});
-
 	const parsedValue = typeof value === 'number' ? value : 0;
 
-	const onClick = (operation: Op) => {
-		const valueParsed = parsedValue;
-		if (operation === Op.PLUS) {
-			setValue(formName, valueParsed + 1);
-		} else if (valueParsed > 0) {
-			setValue(formName, valueParsed - 1);
+	const onClick = (action: ActionType) => {
+		switch (action) {
+			case ActionType.INCREMENT:
+				setValue(formName, parsedValue + 1);
+				break;
+			case ActionType.DECREMENT:
+				if (parsedValue > 0) {
+					setValue(formName, parsedValue - 1);
+				}
+				break;
 		}
 	};
-	const canShow = parsedValue <= 0;
+
 	return (
 		<div className="flex justify-between w-full items-center">
 			<H4>{name}</H4>
 			<div className="flex">
-				{!canShow ? (
+				{parsedValue > 0 && (
 					<IconButton
 						aria-label={`Diminuir em 1 a quantidade de stickers ${name}`}
-						disabled={canShow}
-						onClick={() => onClick(Op.SUB)}
+						onClick={() => onClick(ActionType.DECREMENT)}
 						className="bg-CL_BLUE_DARK p-2  mr-2 "
 					>
 						<MinusIcon className="w-5 h-4 text-CL_WHITE_LIGHT" />
 					</IconButton>
-				) : null}
-				<div className="">
+				)}
+				<div>
 					<Controller
 						name={formName}
 						control={control}
@@ -60,16 +56,22 @@ export default function StickerItem({name, formName}: IStickerItemProps) {
 								className="!font-bold !text-CL_BLACK text-base text-center !border !border-CL_BLUE_DARK bg-CL_BLUE_LIGHT"
 								containerProps={{className: `max-w-[60px] min-w-[50px]  `}}
 								size="md"
+								aria-label={`Quantidade de stickers ${name}`}
 								labelProps={{
 									className: 'hidden',
 								}}
-								hidden={canShow}
+								hidden={!(parsedValue > 0)}
+								min={0}
 								crossOrigin="true"
 							/>
 						)}
 					/>
 				</div>
-				<IconButton onClick={() => onClick(Op.PLUS)} className="bg-CL_BLUE_DARK p-2 ml-2">
+				<IconButton
+					aria-label={`Aumentar em 1 a quantidade de stickers ${name}`}
+					onClick={() => onClick(ActionType.INCREMENT)}
+					className="bg-CL_BLUE_DARK p-2 ml-2"
+				>
 					<PlusIcon className="w-5 h-4 text-CL_WHITE_LIGHT" />
 				</IconButton>
 			</div>
