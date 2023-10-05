@@ -9,7 +9,7 @@ Resources:
       BucketName: 'sticker-buyer'
       WebsiteConfiguration:
         IndexDocument: 'index.html'
-        ErrorDocument: 'error.html'
+        ErrorDocument: '404.html'
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
