@@ -1,10 +1,8 @@
-import {THEME_COLORS} from '@/app/_constants/theme';
-import {ThemeConfig} from 'tailwindcss/types/config';
+// const DEFAULT_THEME = {
+// 	// colors: THEME_COLORS,
+// };
 
-const DEFAULT_THEME: ThemeConfig = {
-	colors: THEME_COLORS,
-};
-
+// Futuramente pode ser possivel alterar o tema da aplicação
 export default function createTheme() {
-	return DEFAULT_THEME;
+	return undefined;
 }
