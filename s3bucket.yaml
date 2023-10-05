@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template para a criacao de um bucket s3 na AWS.
+
+Resources:
+  StickerBuyer:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      # AccessControl: 'PublicRead'
+      BucketName: 'sticker-buyer'
+      WebsiteConfiguration:
+        IndexDocument: 'index.html'
+        ErrorDocument: 'error.html'
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref StickerBuyer
+      PolicyDocument:
+        Id: PolicyForStickerBuyerBucket
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+          # - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: arn:aws:s3:::sticker-buyer/*
+            # Resource: !Join ['', ['arn:aws:s3:::', !Ref StickerBuyer, /*]]
+
+# Outputs:
+#   WebsiteURL:
+#     Description: 'URL do website'
+#     Value: !GetAtt [StickerBuyer, WebsiteURL]
