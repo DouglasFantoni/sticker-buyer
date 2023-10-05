@@ -36,10 +36,10 @@ export default function StickerForm({}: IStickerFormProps) {
 
 		console.log('SUBMIT', data);
 
-		// Esconde o toast após 5 segundos
+		// Esconde o toast após 6 segundos
 		setTimeout(() => {
 			setShowToast(false);
-		}, 8000);
+		}, 6000);
  };
 
  return (
