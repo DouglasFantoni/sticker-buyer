@@ -5,7 +5,6 @@ Resources:
   StickerBuyer:
     Type: 'AWS::S3::Bucket'
     Properties:
-      # AccessControl: 'PublicRead'
       BucketName: 'sticker-buyer'
       WebsiteConfiguration:
         IndexDocument: 'index.html'
@@ -20,14 +19,35 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Sid: PublicReadGetObject
-          # - Sid: PublicReadForGetBucketObjects
             Effect: Allow
             Principal: '*'
             Action: s3:GetObject
             Resource: arn:aws:s3:::sticker-buyer/*
-            # Resource: !Join ['', ['arn:aws:s3:::', !Ref StickerBuyer, /*]]
 
-# Outputs:
-#   WebsiteURL:
-#     Description: 'URL do website'
-#     Value: !GetAtt [StickerBuyer, WebsiteURL]
+  CloudFrontDistribution:
+      Type: 'AWS::CloudFront::Distribution'
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName: !GetAtt [StickerBuyer, DomainName]
+              Id: S3Origin
+              S3OriginConfig:
+                OriginAccessIdentity: ""
+          Enabled: true
+          DefaultRootObject: 'index.html'
+          DefaultCacheBehavior:
+            TargetOriginId: S3Origin
+            ViewerProtocolPolicy: 'redirect-to-https'
+            AllowedMethods:
+              - 'GET'
+              - 'HEAD'
+            CachedMethods:
+              - 'GET'
+              - 'HEAD'
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: 'none'
+          PriceClass: 'PriceClass_100'
+          ViewerCertificate:
+            CloudFrontDefaultCertificate: true
